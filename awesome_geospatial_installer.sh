@@ -97,4 +97,14 @@ installPyLibs() {
 
 processadores=$(nproc)
 zenity --info --text '<span foreground="red" font="24">Welcome to the Awesome-Geospatial Installer</span>\n\n<i>Version: 0.1</i>'
-echo $processadores
+
+addRepos
+installUtils
+installQGIS
+installSAGA
+installGDAL
+installR
+installPGIS
+installGEOS
+installMapnik
+installPyLibs
