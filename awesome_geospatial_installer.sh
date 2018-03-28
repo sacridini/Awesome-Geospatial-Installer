@@ -38,7 +38,7 @@ ubuntuVersion() {
 
 installUtils() {
     sudo apt-get install -y build-essential
-    sudo apt-get install -y gcc-6 g++-6 clang-3.8 -y
+    sudo apt-get install -y gcc-6 g++-6 clang-3.8
     sudo apt-get install -y cmake
     sudo apt-get install -y git
     sudo apt-get install -y htop
