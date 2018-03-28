@@ -13,10 +13,13 @@
 # ---------------------------------- [ start ] ------------------------------------
 
 echo "----------------- [Initializing Awesome-Geospatial Installer] -----------------"
+echo "----------------- Author:   Eduardo Lacerda, eduardolacerdageo@gmail.com -----------------"
+processadores=$(nproc)
 
 addRepos() {
     sudo add-apt-repository ppa:ubuntugis/ppa
     sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+    sudo add-apt-repository ppa:grass/grass-devel
     sudo apt-get update
 }
 
@@ -74,6 +77,12 @@ installGDAL() {
     sudo apt-get install -y python-gdal
 }
 
+# ------------------------------ [ install GRASS GIS ] ---------------------------------
+
+installGRASS() {
+  sudo apt-get install -y grass
+}
+
 # ------------------------------ [ install QGIS ] ---------------------------------
 
 installQGIS() {
@@ -100,6 +109,12 @@ installGEOS() {
     cd ..
     rm -rf geos-3.6.2
     rm -rf geos-3.6.2.tar.bz2
+}
+
+# ------------------------------ [ install SQLite ] ---------------------------------
+
+installSQLite() {
+  sudo apt-get install -y sqlite3 libsqlite3-dev
 }
 
 # ------------------------------ [ install PostgreSQL ] ---------------------------------
@@ -166,17 +181,16 @@ installMapnik() {
   rm -rf mapnik-3.x
 }
 
-processadores=$(nproc)
-dialog --info --text '<span foreground="red" font="24">Welcome to the Awesome-Geospatial Installer</span>\n\n<i>Version: 0.1</i>'
-
 welcomeMsg
 ubuntuVersion
 addRepos
 installUtils
 installGDAL
+installGRASS
 installQGIS
 installSAGA
 installGEOS
+installSQLite
 installPGSQL
 installPQXX
 installMapnik
