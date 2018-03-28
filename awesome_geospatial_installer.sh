@@ -1,80 +1,156 @@
-#!/bin/sh
+#! /bin/bash
+# geoshell.sh
+# 
+# author: Eduardo Lacerda
+# email: eduardolacerdageo@gmail.com
+# address: Universidade Federal Fluminense (UFF) - Geography Department
+# 
+#                   Niterói - Rio de Janeiro - Brasil
+#                                  2017
+#
+# Version 0.1 Alpha
 
-# Add Repositories
+# ---------------------------------- [ start ] ------------------------------------
+
+echo "----------------- [Initializing Awesome-Geospatial Installer] -----------------"
+
 addRepos() {
-  sudo apt-get upgrade -y
-  sudo add-apt-repository -y ppa:ubuntugis/ppa
-  sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
-  sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  sudo apt-add-repository -y ppa:johanvdw/saga-gis
-  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-  sudo add-apt-repository 'deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu xenial/'
-  sudo apt-get update -y
+    sudo add-apt-repository ppa:ubuntugis/ppa
+    sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+    sudo apt-get update
 }
 
-# install - UTILS
+installDialog() {
+    sudo apt-get install dialog
+}
+
+welcomeMsg() {
+    dialog --title "AGI" --infobox "Awesome-Geospatial Installer \n\n\n Use the keyboard to select items" 9 45; sleep 2 
+}
+
+ubuntuVersion() {
+    version=$(dialog --stdout --title "Awesome-Geospatial Installer" --menu "Choose your Ubuntu version:" 0 0 15 \
+    1 "Zesty (17.04)" \
+    2 "Yakkety (16.10)" \
+    3 "Xenial (16.04)" \
+    4 "Trusty (14.04)" \
+    5 "Precise (12.04)")
+}
+
+# ------------------------------ [ install utils ] ---------------------------------
+
 installUtils() {
-  sudo apt-get install build-essential -y
-  sudo apt-get install -y gcc-6 g++-6 clang-3.8 -y
-  sudo apt-get install vim git subversion cmake pkg-config dialog -y
-  sudo apt-get install python-imaging-tk -y
+    sudo apt-get install -y build-essential
+    sudo apt-get install -y gcc-6 g++-6 clang-3.8 -y
+    sudo apt-get install -y cmake
+    sudo apt-get install -y git
+    sudo apt-get install -y htop
+    sudo apt-get install -y xterm
+    sudo apt-get install -y vim
+    sudo apt-get install -y pkg-config
+    sudo apt-get install -y python-dev
+    sudo apt-get install -y libgtk2.0-dev
+    sudo apt-get install -y libavcodec-dev
+    sudo apt-get install -y libavformat-dev
+    sudo apt-get install -y libswscale-dev
+    sudo apt-get install -y libtbb2
+    sudo apt-get install -y libtbb-dev
+    sudo apt-get install -y libjpeg-dev
+    sudo apt-get install -y libpng-dev
+    sudo apt-get install -y libtiff-dev
+    sudo apt-get install -y libjasper-dev
+    sudo apt-get install -y libdc1394-22-dev
+    sudo apt-get install -y libfontconfig1
+    sudo apt-get install -y mesa-common-dev
+    sudo apt-get install -y libglu1-mesa-dev
 }
 
-# install - QGIS
+# ------------------------------ [ install GDAL/OGR ] ---------------------------------
+
+installGDAL() {
+    sudo apt-get install -y libproj-dev # lib proj   
+    sudo apt-get install -y libgdal-dev    sudo apt-get install -y libgdal-dev
+    sudo apt-get install -y gdal-bin
+    sudo apt-get install -y python-gdal
+}
+
+# ------------------------------ [ install QGIS ] ---------------------------------
+
 installQGIS() {
-  sudo apt install qgis python-qgis qgis-plugin-grass -y
+    sudo apt-get install -y qgis
+    sudo apt-get install -y python-qgis
+    sudo apt-get install -y qgis-plugins-grass
 }
 
-# install - SAGA 
+# ------------------------------ [ install SAGA ] ---------------------------------
+
 installSAGA() {
   sudo apt-get install saga -y
-}
+}}
+ 
+# ------------------------------ [ install GEOS ] ---------------------------------
 
-# install - GDAL
-installGDAL() {
-  sudo apt-get install libproj-dev gdal-bin python-gdal libgdal-dev -y
-}
-
-# install R
-installR() {
-  sudo apt-get install r-base -y
-  echo "install.packages('raster')" >> Rlibs.r
-  echo "install.packages('rgdal')" >> Rlibs.r
-  echo "install.packages('RStoolbox')" >> Rlibs.r
-  echo "install.packages('rgeos')" >> Rlibs.r
-  echo "install.packages('RQGIS')" >> Rlibs.r
-  echo "install.packages('RSAGA')" >> Rlibs.r
-  echo "install.packages('RODBC')" >> Rlibs.r
-  echo "install.packages('leafletR')" >> Rlibs.r
-  echo "install.packages('maps')" >> Rlibs.r
-  echo "install.packages('landsat')" >> Rlibs.r
-  echo "install.packages('rasterVis')" >> Rlibs.r
-  echo "install.packages('devtools')" >> Rlibs.r
-  echo "install.packages('bfast')" >> Rlibs.r
-  echo "library(devtools)" >> Rlibs.r
-  echo "install_github('loicdtx/bfastSpatial')" >> Rlibs.r
-  echo "install_github('vwmaus/dtwSat')" >> Rlibs.r
-  Rscript Rlibs.r
-  rm Rlibs.r
-}
-
-# install - PostgreSQL/PostGIS
-installPGIS() {
-  sudo apt-get install postgresql postgresql-contrib -y
-  sudo apt-get install postgis pgadmin3 -y
-}
-# install - GEOS
 installGEOS() {
-  wget http://download.osgeo.org/geos/geos-3.6.2.tar.bz2
-  tar xjf geos-3.6.2.tar.bz2
-  cd geos-3.6.2
-  ./configure && make -j$processadores && sudo make install
-  cd ..
-  rm -rf geos-3.6.2
-  rm geos-3.6.2.tar.bz2
+    wget http://download.osgeo.org/geos/geos-3.6.2.tar.bz2
+    tar xjf geos-3.6.2.tar.bz2
+    cd geos-3.6.2
+    ./configure
+    make
+    sudo make install
+    cd ..
+    rm -rf geos-3.6.2
+    rm -rf geos-3.6.2.tar.bz2
 }
 
-#install - Mapnik
+# ------------------------------ [ install PostgreSQL ] ---------------------------------
+
+installPGSQL() {
+    if test $version == 1
+    then
+        sudo apt-get install -y postgresql-9.6
+        sudo apt-get install -y postgresql-9.6-postgis-2.3
+        sudo apt-get install -y postgresql-contrib-9.6
+        sudo apt-get install -y postgresql-9.6-pgrouting
+        return
+    elif test $version == 2 
+    then
+        sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt xenial-pgdb main"
+    elif test $version == 3
+    then
+        sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt xenial-pgdb main"
+    elif test $version == 4
+    then
+        sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt trusty-pgdb main"
+    else test $version == 5
+    then
+        sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt precise-pgdb main"
+    fi
+
+        wget --quiet -O - http://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+            sudo apt-key add -
+        sudo apt-get update
+        sudo apt-get install -y postgresql-9.6
+        sudo apt-get install -y postgresql-9.6-postgis-2.3
+        sudo apt-get install -y postgresql-contrib-9.6
+        sudo apt-get install -y postgresql-9.6-pgrouting
+}
+
+# ------------------------------ [ install libpqxx ] ---------------------------------
+
+installPQXX() {
+    wget http://pqxx.org/download/software/libpqxx-4.0.tar.gz
+    tar xvfz libpqxx-4.0.tar.gz
+    cd libpqxx-4.0
+    ./configure
+    make
+    sudo make install
+    cd ..
+    rm -rf libpqxx-4.0
+    rm -rf libpqxx-4.0.tar.gz
+}
+
+# ------------------------------ [ install Mapnik ] ---------------------------------
+
 installMapnik() {
   export CXX="clang++-3.8" && export CC="clang-3.8"
   git clone https://github.com/mapnik/mapnik mapnik-3.x --depth 10
@@ -90,21 +166,17 @@ installMapnik() {
   rm -rf mapnik-3.x
 }
 
-# install - Python Libs
-installPyLibs() {
-  sudo python -m pip install numpy scipy matplotlib pandas gdal rasterio fiona shapely google-api-python-client earthengine-api
-}
-
 processadores=$(nproc)
-zenity --info --text '<span foreground="red" font="24">Welcome to the Awesome-Geospatial Installer</span>\n\n<i>Version: 0.1</i>'
+dialog --info --text '<span foreground="red" font="24">Welcome to the Awesome-Geospatial Installer</span>\n\n<i>Version: 0.1</i>'
 
+welcomeMsg
+ubuntuVersion
 addRepos
 installUtils
+installGDAL
 installQGIS
 installSAGA
-installGDAL
-installR
-installPGIS
 installGEOS
+installPGSQL
+installPQXX
 installMapnik
-installPyLibs
