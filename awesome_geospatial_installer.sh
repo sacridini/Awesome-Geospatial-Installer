@@ -89,7 +89,7 @@ installQGIS() {
 
 installSAGA() {
   sudo apt-get install saga -y
-}}
+}
  
 # ------------------------------ [ install GEOS ] ---------------------------------
 
