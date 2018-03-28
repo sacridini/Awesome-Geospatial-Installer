@@ -1,14 +1,8 @@
 #! /bin/bash
-# geoshell.sh
+# awesome_geospatial_installer.sh
 # 
-# author: Eduardo Lacerda
-# email: eduardolacerdageo@gmail.com
-# address: Universidade Federal Fluminense (UFF) - Geography Department
-# 
-#                   Niterói - Rio de Janeiro - Brasil
-#                                  2017
-#
-# Version 0.1 Alpha
+# author: Eduardo R. Lacerda
+# email: elacerda@id.uff.br
 
 # ---------------------------------- [ start ] ------------------------------------
 
