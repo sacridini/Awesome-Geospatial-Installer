@@ -46,6 +46,7 @@ installUtils() {
     sudo apt-get install -y vim
     sudo apt-get install -y pkg-config
     sudo apt-get install -y python-dev
+    sudo apt-get install -y libudunits2-dev
     sudo apt-get install -y libssl-dev
     sudo apt-get install -y libcairo2-dev
     sudo apt-get install -y libopenblas-dev
