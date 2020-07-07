@@ -8,38 +8,7 @@ welcomeMsg() {
   dialog --title "PLANGEA" --msgbox "PLANGEA Installer v0.1 \n\n\n Pronto para instalar o PLANGEA? " 9 45;
   clear 
 }
-
-showMenu() {
- escolha=$(dialog --menu "What to install?:" 10 60 3 \
-        1 "Utils (htop, tmux, gdal, R, Python, etc)"\
-        2 "R Packages" \
-        3 "Gurobi"\
-        4 "Clone Plangea from Git"\
-        5 "All"\
-        6 "None" --stdout);
- clear
-  if [escolha == 1]
-  then
-    installUtils
-  elif [escolha == 2]
-  then
-    installRLibs
-  elif [escolha == 3]
-  then
-    installGurobi
-  elif [escolha == 4]
-  then
-    installPlangea
-  elif [escolha == 5]
-  then
-    installUtils
-    installRLibs
-    installGurobi
-    installPlangea
-  else
-    finish
-  fi
-}
+welcomeMsg
 
 installUtils() {
   sudo apt-get install -y build-essential; echo "Installed build essential without errors." >> plangea_installer.log
@@ -116,3 +85,31 @@ finish() {
   sleep 3;
   clear
 }
+
+showMenu() {
+ escolha=$(dialog --menu "What to install?:" 20 60 6\
+        1 "Utils (htop, tmux, gdal, R, Python, etc)"\
+        2 "R Packages" \
+        3 "Gurobi"\
+        4 "Clone Plangea from Git"\
+        5 "All"\
+        6 "None" --stdout); clear
+ 
+ if [ $escolha == 1 ]; then
+   installUtils
+ elif [ $escolha == 2 ]; then
+   installRLibs
+ elif [ $escolha == 3 ]; then
+   installGurobi
+ elif [ $escolha == 4 ]; then
+   installPlangea
+ elif [ $escolha == 5 ]; then
+   installUtils
+   installRLibs
+   installGurobi
+   installPlangea
+ elif [ $escolha == 6 ]; then
+   finish
+ fi
+}
+showMenu
