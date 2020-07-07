@@ -88,6 +88,7 @@ installRLibs() {
   echo 'install.packages("tidyverse")' >> install_R_packages.R
   echo 'install.packages("sf")' >> install_R_packages.R
   echo 'install.packages("raster")' >> install_R_packages.R
+  echo 'install.packages("slam")' >> install_R_packages.R
   echo 'install.packages("Rsymphony")' >> install_R_packages.R
   sudo Rscript install_R_packages.R
   echo "Installed R packages without errors." >> plangea_installer.log
@@ -99,7 +100,12 @@ installGurobi() {
   tar xvfz $gurobi_path /opt
   gurobi_folder_name=$(ls /opt | grep gurobi)  
   export PATH="${PATH}:/opt/$gurobi_folder_name/linux64/bin"
+  echo 'install.packages("/opt/gurobi902/linux64/R/gurobi_9.0-2_R_3.6.1.tar.gz", repos=NULL)' >> install_R_packages.R
+  sudo Rscript install_R_packages.R
+  rm install_R_packages.R
   cd /opt/$gurobi_folder_name/linux64/bin
+  key=$(dialog --title "PLANGEA" --inputbox "Enter your gurobi key" 0 0)
+  grbgetkey $key
 }
 
 finish() {
