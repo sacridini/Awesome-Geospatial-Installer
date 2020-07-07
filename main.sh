@@ -108,6 +108,7 @@ showMenu() {
    installRLibs
    installGurobi
    installPlangea
+   finish
  elif [ $escolha == 6 ]; then
    finish
  fi
