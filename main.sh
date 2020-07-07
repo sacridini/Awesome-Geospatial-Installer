@@ -75,7 +75,14 @@ installPlangea() {
 installRLibs() {
   cd
   . .bashrc
-
+  echo 'install.packages("devtools")' >> install_R_packages.R
+  echo 'install.packages("jsonlite")' >> install_R_packages.R
+  echo 'install.packages("rgdal")' >> install_R_packages.R
+  echo 'install.packages("tidyverse")' >> install_R_packages.R
+  echo 'install.packages("sf")' >> install_R_packages.R
+  echo 'install.packages("raster")' >> install_R_packages.R
+  echo 'install.packages("Rsymphony")' >> install_R_packages.R
+  echo 'install.packages("gurobi")' >> install_R_packages.R
 }
 
 installGurobi() {
@@ -97,5 +104,6 @@ finish() {
 # welcomeMsg
 # installUtils
 # showMenu
-installPlangea
-finish
+# installPlangea
+installRLibs
+# finish
