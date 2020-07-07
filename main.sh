@@ -89,7 +89,6 @@ installRLibs() {
   echo 'install.packages("sf")' >> install_R_packages.R
   echo 'install.packages("raster")' >> install_R_packages.R
   echo 'install.packages("Rsymphony")' >> install_R_packages.R
-  echo 'install.packages("gurobi")' >> install_R_packages.R
   sudo Rscript install_R_packages.R
   echo "Installed R packages without errors." >> plangea_installer.log
   rm install_R_packages.R
@@ -100,6 +99,7 @@ installGurobi() {
   tar xvfz $gurobi_path /opt
   gurobi_folder_name=$(ls /opt | grep gurobi)  
   export PATH="${PATH}:/opt/$gurobi_folder_name/linux64/bin"
+  cd /opt/$gurobi_folder_name/linux64/bin
 }
 
 finish() {
