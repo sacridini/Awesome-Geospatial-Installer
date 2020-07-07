@@ -79,9 +79,10 @@ installRLibs() {
 }
 
 installGurobi() {
-  gurobi_path=$(dialog --title "PLANGEA" --inputbox "Set the path for the Gurobi installer" 0 0)
-  tar xvfz $gurobi_path /opt/
-  installed_path=$(ls /opt | grep gurobi)  
+  gurobi_path=$(dialog --title "PLANGEA" --inputbox "Where is the gurobi .tar.gz installer file?" 0 0)
+  tar xvfz $gurobi_path /opt
+  gurobi_folder_name=$(ls /opt | grep gurobi)  
+  export PATH="${PATH}:/opt/$gurobi_folder_name/linux64/bin"
 }
 
 finish() {
