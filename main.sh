@@ -15,7 +15,8 @@ showMenu() {
         2 "R Packages" \
         3 "Gurobi"\
         4 "Clone Plangea from Git"\
-        5 "None" --stdout);
+        5 "All"\
+        6 "None" --stdout);
  clear
   if [escolha == 1]
   then
@@ -28,6 +29,12 @@ showMenu() {
     installGurobi
   elif [escolha == 4]
   then
+    installPlangea
+  elif [escolha == 5]
+  then
+    installUtils
+    installRLibs
+    installGurobi
     installPlangea
   else
     finish
@@ -49,6 +56,8 @@ installUtils() {
   sudo apt-get install -y r-base-dev; echo "Installed R without errors." >> plangea_installer.log
   sudo apt-get install -y gdal-bin; echo "Installed gdal (bin) without errors." >> plangea_installer.log
   sudo apt-get install -y libgdal-dev; echo "Installed gdal (dev) without errors." >> plangea_installer.log
+  sudo apt-get install -y coinor-libsymphony*; echo "Installed symphony without errors." >> plangea_installer.log
+  sudo apt-get install -y coinor-libsymphony-dev; echo "Installed symphony dev without errors." >> plangea_installer.log
 }
 
 installPlangea() {
@@ -73,8 +82,6 @@ installPlangea() {
 }
 
 installRLibs() {
-  cd
-  . .bashrc
   echo 'install.packages("devtools")' >> install_R_packages.R
   echo 'install.packages("jsonlite")' >> install_R_packages.R
   echo 'install.packages("rgdal")' >> install_R_packages.R
@@ -83,6 +90,9 @@ installRLibs() {
   echo 'install.packages("raster")' >> install_R_packages.R
   echo 'install.packages("Rsymphony")' >> install_R_packages.R
   echo 'install.packages("gurobi")' >> install_R_packages.R
+  sudo Rscript install_R_packages.R
+  echo "Installed R packages without errors." >> plangea_installer.log
+  rm install_R_packages.R
 }
 
 installGurobi() {
@@ -100,10 +110,3 @@ finish() {
   sleep 3;
   clear
 }
-
-# welcomeMsg
-# installUtils
-# showMenu
-# installPlangea
-installRLibs
-# finish
