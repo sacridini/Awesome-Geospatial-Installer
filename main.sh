@@ -13,8 +13,25 @@ showMenu() {
  escolha=$(dialog --menu "What to install?:" 10 60 3 \
         1 "Utils (htop, tmux, gdal, R, Python, etc)"\
         2 "R Packages" \
-        3 "Gurobi" --stdout);
+        3 "Gurobi"\
+        4 "Clone Plangea from Git"\
+        5 "None" --stdout);
  clear
+  if [escolha == 1]
+  then
+    installUtils
+  elif [escolha == 2]
+  then
+    installRLibs
+  elif [escolha == 3]
+  then
+    installGurobi
+  elif [escolha == 4]
+  then
+    installPlangea
+  else
+    finish
+  fi
 }
 
 installUtils() {
@@ -52,7 +69,17 @@ installPlangea() {
      git checkout dev
      cd ..
   fi
-  echo "Create a plangea clone at $(plangea_path)" >> plangea_installer.log
+  echo "Created plangea clone @ $plangea_path" >> plangea_installer.log
+}
+
+installRLibs() {
+  cd
+  . .bashrc
+
+}
+
+installGurobi() {
+
 }
 
 finish() {
